@@ -4,30 +4,30 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.tananaev.jsonpatch.JsonPath;
 
-public class MoveOperation extends AbsOperation {
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class CopyOperation extends AbsOperation{
+
 
     public final JsonPath from;
 
-    public MoveOperation(JsonPath from, JsonPath path) {
+    public CopyOperation(JsonPath from, JsonPath path) {
         this.path = path;
         this.from = from;
     }
 
     @Override
     public String getOperationName() {
-        return "move";
+        return "copy";
     }
 
     @Override
     public void applyInPlace(InPlaceElementWrapper inPlaceElement) {
         JsonElement sourceElement = inPlaceElement.getJsonElement();
         JsonElement value = from.navigate(sourceElement);
-
-        JsonElement existingElement = from.head().navigate(sourceElement);
         JsonElement destination = path.head().navigate(sourceElement);
-
-        removeValue(existingElement, from.tail());
-
         setValue(destination, path.tail(), value);
     }
 

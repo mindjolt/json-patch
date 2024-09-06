@@ -1,8 +1,13 @@
 package com.tananaev.jsonpatch.operation;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.annotations.SerializedName;
 import com.tananaev.jsonpatch.JsonPath;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public abstract class AbsOperation {
 
@@ -36,5 +41,50 @@ public abstract class AbsOperation {
      * @param inPlaceElement input to which the patch is to be applied
      */
     public abstract void applyInPlace(InPlaceElementWrapper inPlaceElement );
+
+    /**
+     * Set the JSONElement value at the specific path in the JSONElement item
+     */
+    protected void setValue(JsonElement item, String path, JsonElement value) {
+        if (item.isJsonObject()) {
+            item.getAsJsonObject().add(path, value);
+        } else if (item.isJsonArray()) {
+
+            JsonArray array = item.getAsJsonArray();
+
+            int index = (path.equals("-")) ? array.size() : Integer.valueOf(path);
+
+            List<JsonElement> temp = new ArrayList<JsonElement>();
+
+            Iterator<JsonElement> iter = array.iterator();
+            while (iter.hasNext()) {
+                JsonElement stuff = iter.next();
+                iter.remove();
+                temp.add(stuff);
+            }
+
+            temp.add(index, value);
+
+            for (JsonElement stuff : temp) {
+                array.add(stuff);
+            }
+
+        }
+    }
+
+    /**
+     * Remove JSONElement from the specific path in the JSONElement item
+     */
+    protected void removeValue(JsonElement item, String path) {
+        if ( item.isJsonObject() ){
+            item.getAsJsonObject().remove(path);
+        } else if ( item.isJsonArray() ){
+            JsonArray array = item.getAsJsonArray();
+
+            int index = (path.equals("-")) ? array.size() : Integer.valueOf(path);
+
+            array.remove(index);
+        }
+    }
 
 }

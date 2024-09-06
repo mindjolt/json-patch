@@ -32,6 +32,7 @@ public class AbsOperationDeserializer implements JsonDeserializer<AbsOperation> 
     private Type getType(String operation) throws JsonSyntaxException {
         if ("add".equals(operation)) return AddOperation.class;
         if ("move".equals(operation)) return MoveOperation.class;
+        if ("copy".equals(operation)) return CopyOperation.class;
         if ("remove".equals(operation)) return RemoveOperation.class;
         if ("replace".equals(operation)) return ReplaceOperation.class;
         throw new JsonSyntaxException("operation " + operation + " not supported");

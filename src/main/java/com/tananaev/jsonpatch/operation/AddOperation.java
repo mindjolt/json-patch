@@ -1,15 +1,10 @@
 package com.tananaev.jsonpatch.operation;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.annotations.SerializedName;
 import com.tananaev.jsonpatch.JsonPath;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-public class AddOperation extends AbsOperation {
+public class AddOperation extends AbsOperation{
 
     @SerializedName("value")
     public JsonElement data;
@@ -28,31 +23,7 @@ public class AddOperation extends AbsOperation {
     public void applyInPlace(InPlaceElementWrapper inPlaceElement){
         JsonElement sourceElement = inPlaceElement.getJsonElement();
         JsonElement item = path.head().navigate(sourceElement);
-
-        if ( item.isJsonObject() ){
-            item.getAsJsonObject().add(path.tail(),data);
-        } else if ( item.isJsonArray() ){
-
-            JsonArray array = item.getAsJsonArray();
-
-            int index = (path.tail().equals("-")) ? array.size() : Integer.valueOf(path.tail());
-
-            List<JsonElement> temp = new ArrayList<JsonElement>();
-
-            Iterator<JsonElement> iter = array.iterator();
-            while (iter.hasNext()){
-                JsonElement stuff = iter.next();
-                iter.remove();
-                temp.add( stuff );
-            }
-
-            temp.add(index, data);
-
-            for ( JsonElement stuff: temp ){
-               array.add(stuff);
-            }
-
-        }
+        setValue(item, path.tail(), data);
     }
 
 }

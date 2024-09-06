@@ -20,16 +20,7 @@ public class RemoveOperation extends AbsOperation{
 
         JsonElement item = path.head().navigate(inPlaceElement.getJsonElement());
 
-        if ( item.isJsonObject() ){
-            item.getAsJsonObject().remove(path.tail());
-        } else if ( item.isJsonArray() ){
-            JsonArray array = item.getAsJsonArray();
-
-            int index = (path.tail().equals("-")) ? array.size() : Integer.valueOf(path.tail());
-
-            array.remove(index);
-        }
-
+        removeValue(item, path.tail());
     }
 
 }
