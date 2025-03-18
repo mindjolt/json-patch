@@ -17,9 +17,9 @@ jobs:
       - run: chmod +x gradlew
 
       - name: Publish
-          env:
-            GH_USER: ${{ github.actor }}
-            GH_PAT: ${{ secrets.PACKAGES_PAT }}
-          uses: gradle/gradle-build-action@v2.3.3
-          with:
-            arguments: publish -xtest
+        env:
+          GH_USER: ${{ github.actor }}
+          GH_PAT: ${{ secrets.PACKAGES_PAT }}
+        uses: gradle/gradle-build-action@v2.3.3
+        with:
+          arguments: publish -xtest
