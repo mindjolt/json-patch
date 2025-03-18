@@ -29,30 +29,6 @@ publishing {
     publications {
         gpr(MavenPublication) {
             from(components.java)
-            pom {
-                name = 'json-patch'
-                packaging = 'jar'
-                description = 'A Gson-based JSON patch standard implementation.'
-                url = 'https://github.com/tananaev/json-patch'
-                scm {
-                    connection = 'scm:git:https://github.com/tananaev/json-patch'
-                    developerConnection = 'scm:git:git@github.com:tananaev/json-patch.git'
-                    url = 'https://github.com/tananaev/json-patch'
-                }
-                licenses {
-                    license {
-                        name = 'Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'tananaev'
-                        name = 'Anton Tananaev'
-                        email = 'anton.tananaev@gmail.com'
-                    }
-                }
-            }
         }
     }
 }
